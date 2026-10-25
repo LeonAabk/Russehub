@@ -414,12 +414,39 @@ const defaultNotices = [
   }
 ];
 
+// Embedded fallback configuration for GitHub / offline / standalone hosting
+const DEFAULT_FIREBASE_CONFIG = {
+  projectId: "zany-arbor-2bcxw",
+  appId: "1:115701689159:web:3ce374ed21888b948dba62",
+  apiKey: "AIzaSyDMsWhrZ5hnaGQNJ1Um5hUn19kUllD6fec",
+  authDomain: "zany-arbor-2bcxw.firebaseapp.com",
+  firestoreDatabaseId: "ai-studio-f350e8e1-af13-42cf-bed2-6e624e6a42ba",
+  storageBucket: "zany-arbor-2bcxw.firebasestorage.app",
+  messagingSenderId: "115701689159",
+  measurementId: "",
+  oAuthClientId: "115701689159-87gr38vda4u7d765di8kjtr9vj5lhjb5.apps.googleusercontent.com",
+  recaptchaSiteKey: ""
+};
+
 // --- Initialize Firebase Services ---
 async function setupFirebase() {
   try {
-    const configRes = await fetch('/firebase-applet-config.json');
-    if (!configRes.ok) throw new Error('Fant ikke firebase-applet-config.json');
-    const config = await configRes.json();
+    let config = null;
+    try {
+      const configRes = await fetch('./firebase-applet-config.json');
+      if (configRes.ok) {
+        config = await configRes.json();
+      } else {
+        const rootRes = await fetch('/firebase-applet-config.json');
+        if (rootRes.ok) config = await rootRes.json();
+      }
+    } catch {
+      config = DEFAULT_FIREBASE_CONFIG;
+    }
+
+    if (!config || !config.projectId) {
+      config = DEFAULT_FIREBASE_CONFIG;
+    }
 
     const app = initializeApp(config);
     const auth = getAuth(app);
