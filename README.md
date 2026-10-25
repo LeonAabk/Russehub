@@ -2,53 +2,52 @@
 
 > Komplett, responsiv webapplikasjon for norske russegrupper med roller, administratorrettigheter, invitasjonskoder, dugnadsbudsjett, planlegger og mediearkiv.
 
-![RussHub](https://img.shields.io/badge/Russetid-2026-e02438.svg)
-![Status](https://img.shields.io/badge/Deploy-GitHub%20Pages-success.svg)
-![Firebase](https://img.shields.io/badge/Backend-Firebase%20v9-orange.svg)
+---
+
+## 🚀 Lansering på GitHub Pages fra `main` / `docs`
+
+Prosjektet er ferdig konfigurert slik at produksjonsfilene bygges direkte inn i mappen `/docs`, med relative stier og `.nojekyll` for full støtte under subpaths (f.eks. `https://aabakstudio.com/Russehub/`).
+
+### 1. Bygg og push til GitHub:
+```bash
+# Bygg de nyeste filene inn i /docs-mappen
+npm run build
+
+# Legg til og push til main-branchen
+git add .
+git commit -m "Klar for GitHub Pages /docs"
+git push origin main
+```
+
+### 2. Aktiver i GitHub:
+1. Åpne GitHub-repositoryet ditt i nettleseren.
+2. Gå til **Settings** ➔ **Pages** (i venstremenyen).
+3. Under **Build and deployment**:
+   - **Source**: Velg `Deploy from a branch`.
+   - **Branch**: Velg `main` og mappen `/docs`.
+   - Klikk **Save**.
+4. Nettsiden vil nå laste inn på `https://aabakstudio.com/Russehub/` med alle stiler, skrifttyper, Firebase og funksjoner intakt!
 
 ---
 
-## ⚡ Rask oppstart (Lokal kjøring)
+## 💻 Lokal kjøring under utvikling
 
-1. **Klon repoet**:
-   ```bash
-   git clone https://github.com/<ditt-brukernavn>/<ditt-repo>.git
-   cd <ditt-repo>
-   ```
-
-2. **Installer avhengigheter**:
+1. **Installer avhengigheter**:
    ```bash
    npm install
    ```
 
-3. **Start utviklingsserver**:
+2. **Start lokal dev-server**:
    ```bash
    npm run dev
    ```
-   Åpne `http://localhost:3000` i nettleseren din.
+   Appen kjører på `http://localhost:3000`.
 
-4. **Bygg for produksjon**:
+3. **Bygg for produksjon**:
    ```bash
    npm run build
-   npm run preview
    ```
-
----
-
-## 🚀 Publisering på GitHub Pages
-
-Dette prosjektet er optimalisert for GitHub Pages:
-
-1. Push koden til ditt GitHub-repository:
-   ```bash
-   git add .
-   git commit -m "Optimalisert for GitHub Pages"
-   git push origin main
-   ```
-2. Gå til repositoryet ditt på GitHub: **Settings** -> **Pages**.
-3. Under **Build and deployment** / **Source**: Velg **GitHub Actions**.
-4. GitHub Actions vil automatisk bygge prosjektet og rulle ut til `https://<ditt-brukernavn>.github.io/<ditt-repo>/`.
-5. *(Alternativt)*: Du kan bygge lokalt med `npm run build` og publisere `dist/`-mappen direkte.
+   Dette oppdaterer automatisk `/docs`-mappen for GitHub Pages.
 
 ---
 
@@ -57,7 +56,7 @@ Dette prosjektet er optimalisert for GitHub Pages:
 - 👑 **Rollesystem & Administrator (RBAC)**:
   - **Bussjef / Administrator**: Full tilgang til å administrere gruppen, endre medlemsroller, endre dugnadsmål og fjerne medlemmer.
   - **Økonomiansvarlig**: Tilgang til føring og godkjenning av budsjettposter.
-  - **Dugnadsansvarlig**: Tilgang til dugnadsvakter og frister.
+  - **Dugnadsansvarlig**: Tilgang til dugnadsvakter og salgsmål.
   - **Medlem**: Tilgang til planlegger, oppslagstavle og felles mediearkiv.
 - 🔑 **Opprett gruppe & Invitasjonskode**:
   - Hver russegruppe får en unik invitasjonskode (f.eks. `KRON-2026`).
@@ -73,11 +72,3 @@ Dette prosjektet er optimalisert for GitHub Pages:
   - Viktige beskjeder fra sjefene med festing øverst (*PIN*).
 - 🌓 **Tema-velger**:
   - Skift mellom mørkt russetema og minimalistisk lyst tema.
-
----
-
-## 🛠️ Teknologistakk
-
-- **Frontend**: Vanilla HTML5, CSS3 (responsiv CSS Grid/Flexbox), Vanilla JavaScript (ES6+ Modules).
-- **Backend**: Firebase Auth (Google Sign-In), Cloud Firestore, Firebase Storage.
-- **Byggverktøy**: Vite med relativ sti-støtte (`base: './'`) for full kompatibilitet med GitHub Pages og statisk hosting.
