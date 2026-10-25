@@ -414,18 +414,14 @@ const defaultNotices = [
   }
 ];
 
-// Embedded fallback configuration for GitHub / offline / standalone hosting
+// Embedded configuration for user's Firebase project (russekontrollen)
 const DEFAULT_FIREBASE_CONFIG = {
-  projectId: "zany-arbor-2bcxw",
-  appId: "1:115701689159:web:3ce374ed21888b948dba62",
-  apiKey: "AIzaSyDMsWhrZ5hnaGQNJ1Um5hUn19kUllD6fec",
-  authDomain: "zany-arbor-2bcxw.firebaseapp.com",
-  firestoreDatabaseId: "ai-studio-f350e8e1-af13-42cf-bed2-6e624e6a42ba",
-  storageBucket: "zany-arbor-2bcxw.firebasestorage.app",
-  messagingSenderId: "115701689159",
-  measurementId: "",
-  oAuthClientId: "115701689159-87gr38vda4u7d765di8kjtr9vj5lhjb5.apps.googleusercontent.com",
-  recaptchaSiteKey: ""
+  apiKey: "AIzaSyBG09hui64JMkCbZ3oI61MWFt9ILuzlueA",
+  authDomain: "russekontrollen.firebaseapp.com",
+  projectId: "russekontrollen",
+  storageBucket: "russekontrollen.firebasestorage.app",
+  messagingSenderId: "909181078893",
+  appId: "1:909181078893:web:f3f4daaabbf8398f879e64"
 };
 
 // --- Initialize Firebase Services ---
@@ -450,7 +446,7 @@ async function setupFirebase() {
 
     const app = initializeApp(config);
     const auth = getAuth(app);
-    const db = getFirestore(app, config.firestoreDatabaseId);
+    const db = config.firestoreDatabaseId ? getFirestore(app, config.firestoreDatabaseId) : getFirestore(app);
     const storage = getStorage(app);
 
     window.RussApp.app = app;
@@ -1790,7 +1786,12 @@ function setupEventListeners() {
       showToast('Innlogget med Google!');
     } catch (err) {
       console.error('Google Sign-In Error:', err);
-      showToast('Innlogging avbrutt: ' + err.message, 'error');
+      if (err.code === 'auth/unauthorized-domain' || err.message?.includes('unauthorized-domain')) {
+        const currentHost = window.location.hostname;
+        showToast(`Domenet "${currentHost}" er ikke autorisert i Firebase Console! Gå til Authentication > Settings > Authorized domains og legg til "${currentHost}".`, 'error');
+      } else {
+        showToast('Innlogging avbrutt: ' + (err.message || err), 'error');
+      }
     }
   });
 

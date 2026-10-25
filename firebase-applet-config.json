@@ -1,12 +1,8 @@
 {
-  "projectId": "zany-arbor-2bcxw",
-  "appId": "1:115701689159:web:3ce374ed21888b948dba62",
-  "apiKey": "AIzaSyDMsWhrZ5hnaGQNJ1Um5hUn19kUllD6fec",
-  "authDomain": "zany-arbor-2bcxw.firebaseapp.com",
-  "firestoreDatabaseId": "ai-studio-f350e8e1-af13-42cf-bed2-6e624e6a42ba",
-  "storageBucket": "zany-arbor-2bcxw.firebasestorage.app",
-  "messagingSenderId": "115701689159",
-  "measurementId": "",
-  "oAuthClientId": "115701689159-87gr38vda4u7d765di8kjtr9vj5lhjb5.apps.googleusercontent.com",
-  "recaptchaSiteKey": ""
+  "apiKey": "AIzaSyBG09hui64JMkCbZ3oI61MWFt9ILuzlueA",
+  "authDomain": "russekontrollen.firebaseapp.com",
+  "projectId": "russekontrollen",
+  "storageBucket": "russekontrollen.firebasestorage.app",
+  "messagingSenderId": "909181078893",
+  "appId": "1:909181078893:web:f3f4daaabbf8398f879e64"
 }
