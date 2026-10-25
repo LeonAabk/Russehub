@@ -1,0 +1,108 @@
+{
+  "entities": {
+    "Group": {
+      "title": "Group",
+      "description": "A russegruppe organization with member roles, invite code, and shared budget target",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "maxLength": 100 },
+        "code": { "type": "string", "maxLength": 20 },
+        "creatorId": { "type": "string" },
+        "creatorName": { "type": "string", "maxLength": 80 },
+        "budgetGoal": { "type": "number" },
+        "members": { "type": "array" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["name", "code", "creatorId"]
+    },
+    "Event": {
+      "title": "Event",
+      "description": "An event, meeting, dugnad or deadline for the russegruppe",
+      "type": "object",
+      "properties": {
+        "groupId": { "type": "string" },
+        "title": { "type": "string", "maxLength": 100 },
+        "date": { "type": "string" },
+        "time": { "type": "string" },
+        "category": { "type": "string", "enum": ["Møte", "Dugnad", "Rulling", "Fest", "Slipp", "Deadline"] },
+        "location": { "type": "string", "maxLength": 150 },
+        "notes": { "type": "string", "maxLength": 500 },
+        "createdBy": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["title", "date", "category"]
+    },
+    "Transaction": {
+      "title": "Transaction",
+      "description": "A budget transaction (income or expense) for the russegruppe",
+      "type": "object",
+      "properties": {
+        "groupId": { "type": "string" },
+        "title": { "type": "string", "maxLength": 100 },
+        "amount": { "type": "number" },
+        "type": { "type": "string", "enum": ["income", "expense"] },
+        "category": { "type": "string", "enum": ["Dugnad", "Sponsor", "Medlemskontingent", "Buss/Van", "Lyd/Lys", "Merch/Klær", "Drivstoff/Drift", "Annet"] },
+        "date": { "type": "string" },
+        "payer": { "type": "string", "maxLength": 80 },
+        "notes": { "type": "string", "maxLength": 300 },
+        "createdBy": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["title", "amount", "type", "category", "date"]
+    },
+    "MediaItem": {
+      "title": "MediaItem",
+      "description": "A media file, photo, screenshot of contract or design inspiration",
+      "type": "object",
+      "properties": {
+        "groupId": { "type": "string" },
+        "title": { "type": "string", "maxLength": 120 },
+        "url": { "type": "string" },
+        "storagePath": { "type": "string" },
+        "category": { "type": "string", "enum": ["Kontrakt", "Skisse/Logo", "Bilde", "Kvittering", "Annet"] },
+        "fileType": { "type": "string" },
+        "uploadedBy": { "type": "string" },
+        "uploaderName": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["title", "url", "category"]
+    },
+    "Notice": {
+      "title": "Notice",
+      "description": "An announcement or note on the notice board",
+      "type": "object",
+      "properties": {
+        "groupId": { "type": "string" },
+        "title": { "type": "string", "maxLength": 120 },
+        "content": { "type": "string", "maxLength": 2000 },
+        "isPinned": { "type": "boolean" },
+        "authorName": { "type": "string", "maxLength": 80 },
+        "authorId": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["title", "content"]
+    }
+  },
+  "firestore": {
+    "/groups/{groupId}": {
+      "schema": "Group",
+      "description": "Russegruppe documents with invite code and members"
+    },
+    "/events/{eventId}": {
+      "schema": "Event",
+      "description": "Calendar events and milestones for the russegruppe"
+    },
+    "/transactions/{transactionId}": {
+      "schema": "Transaction",
+      "description": "Financial records and dugnad budget"
+    },
+    "/media/{mediaId}": {
+      "schema": "MediaItem",
+      "description": "Media uploads, contracts, and screenshots"
+    },
+    "/notices/{noticeId}": {
+      "schema": "Notice",
+      "description": "Announcements and notes on the notice board"
+    }
+  }
+}
